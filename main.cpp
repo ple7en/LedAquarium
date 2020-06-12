@@ -15,6 +15,10 @@
 bool shouldSaveConfig = false;//флаг для сохранения данных
 char blynk_token[34] = "";
 
+int R = 255;
+int G = 255;
+int B = 255;
+
 SimpleTimer timer;
 
 
@@ -37,8 +41,6 @@ void setup()
   Serial.begin(115200);
   Serial.println();
   pixels.begin();
-
-  
 
 
 
@@ -141,21 +143,13 @@ void setup()
 }
 
   BLYNK_WRITE(V5)
-{
-
- 
-int R = param[0].asInt();
-int G = param[1].asInt();
-int B = param[2].asInt();
+{ 
+R = param[0].asInt();
+G = param[1].asInt();
+B = param[2].asInt();
 Serial.println(R);
 Serial.println(G);
 Serial.println(B);
-for(int i=0;i<NUMPIXELS;i++){
- 
-pixels.setPixelColor(i, pixels.Color(R,G,B));
- 
-pixels.show();
-}
   
 }
 
@@ -164,4 +158,10 @@ pixels.show();
   
   Blynk.run();//Initiates Blynk
   timer.run();//Initiates SimpleTimer  
+
+  for(int i=0;i<NUMPIXELS;i++){
+  pixels.setPixelColor(i, pixels.Color(R,G,B));
+  pixels.show();
+  }
+
 }
